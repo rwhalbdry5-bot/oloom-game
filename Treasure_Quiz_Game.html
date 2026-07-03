@@ -1,0 +1,38 @@
+<!doctype html><html lang='fa' dir='rtl'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>بازی علوم ششم</title><style>
+body{font-family:tahoma;background:linear-gradient(#4facfe,#eef);margin:0}
+#box{max-width:700px;margin:20px auto;background:#fff;border-radius:15px;padding:20px}
+button{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;background:#e8eefc}
+button:hover{background:#cddcff}#top{display:flex;justify-content:space-between}
+#next{display:none;background:#4caf50;color:#fff}.good{background:#b8f5b8!important}.bad{background:#ffcccc!important}
+</style></head><body><div id='box'><h2>🏆 شکار گنج علوم ششم</h2>
+<div id='top'><span id='score'>💰۰</span><span id='life'>❤️❤️❤️</span><span id='timer'>20</span></div>
+<h3 id='q'></h3><div id='ans'></div><button id='next'>مرحله بعد</button><div id='msg'></div></div>
+<script>
+const qs=[
+{q:'نیرو چیست؟',a:['هل یا کشیدن','نور','صدا','گرما'],c:0},
+{q:'در طناب کشی چه نیرویی داریم؟',a:['کشیدن','نور','گرما','باد'],c:0},
+{q:'اگر نیرو بیشتر شود؟',a:['حرکت بیشتر','حرکت کمتر','هیچ','نامعلوم'],c:0},
+{q:'کدام ورزش از نیرو استفاده می‌کند؟',a:['همه','هیچ','فقط شطرنج','فقط شنا'],c:0},
+{q:'جاذبه زمین باعث؟',a:['افتادن اجسام','روشنایی','صدا','سرما'],c:0}
+];
+let i=0,s=0,l=3,t,intv;
+function draw(){
+clearInterval(intv);t=20;timer.textContent=t;msg.textContent='';next.style.display='none';
+if(i>=qs.length||l==0){end();return;}
+q.textContent='🗺️ مرحله '+(i+1)+' : '+qs[i].q;ans.innerHTML='';
+qs[i].a.forEach((x,n)=>{let b=document.createElement('button');b.textContent=x;
+b.onclick=()=>pick(n,b);ans.appendChild(b);});
+intv=setInterval(()=>{t--;timer.textContent=t;if(t==0){l--;life.textContent='❤️'.repeat(l);i++;draw();}},1000);
+}
+function pick(n,b){
+clearInterval(intv);
+[...ans.children].forEach(x=>x.disabled=true);
+if(n==qs[i].c){s+=10;b.className='good';msg.textContent='🎁 گنج پیدا شد! +10';}
+else{l--;b.className='bad';msg.textContent='💥 تله!';life.textContent='❤️'.repeat(l);}
+score.textContent='💰'+s;next.style.display='block';
+}
+next.onclick=()=>{i++;draw();}
+function end(){box.innerHTML='<h1>🏁 پایان بازی</h1><h2>امتیاز: '+s+'</h2><p>'+(s>=40?'🎉 تو شکارچی حرفه‌ای گنج هستی!':'⭐ دوباره تلاش کن!')+'</p><button onclick="location.reload()">شروع دوباره</button>';}
+draw();
+</script></body></html>
