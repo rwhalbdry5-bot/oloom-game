@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بازی سوال و جواب</title>
+<style>
+body{font-family:tahoma;background:#eef2ff;margin:0;display:flex;justify-content:center}
+.card{margin:30px;background:#fff;padding:20px;border-radius:12px;max-width:600px;width:95%;box-shadow:0 2px 10px #999}
+button{display:block;width:100%;margin:8px 0;padding:12px;font-size:16px}
+#next{background:#4caf50;color:#fff}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>🏆 بازی سوال و جواب</h2>
+<div id="score">امتیاز: 0</div>
+<h3 id="q"></h3>
+<div id="answers"></div>
+<button id="next" onclick="nextQ()" style="display:none">سوال بعدی</button>
+<div id="end"></div>
+</div>
+<script>
+const qs=[
+{q:"نیرو چیست؟",a:["هل دادن یا کشیدن","نور","صدا","گرما"],c:0},
+{q:"کدام ورزش از نیروی کشیدن استفاده می‌کند؟",a:["طناب‌کشی","شنا","دو","بسکتبال"],c:0},
+{q:"با افزایش نیرو چه می‌شود؟",a:["حرکت بیشتر می‌شود","حرکت کم می‌شود","هیچ","جسم ناپدید می‌شود"],c:0},
+{q:"کدام مورد نمونه نیرو است؟",a:["فشار دادن در","ابر","خورشید","باران"],c:0},
+{q:"جهت نیرو بر حرکت اثر دارد؟",a:["بله","خیر"],c:0}
+];
+let i=0,score=0;
+function show(){
+document.getElementById("next").style.display="none";
+if(i>=qs.length){
+document.getElementById("q").textContent="";
+document.getElementById("answers").innerHTML="";
+document.getElementById("end").innerHTML="<h2>🎉 پایان بازی</h2><p>امتیاز نهایی: "+score+" از "+(qs.length*10)+"</p>";
+return;
+}
+let x=qs[i];
+q.textContent=(i+1)+". "+x.q;
+answers.innerHTML="";
+x.a.forEach((t,idx)=>{
+let b=document.createElement("button");
+b.textContent=t;
+b.onclick=()=>check(idx);
+answers.appendChild(b);
+});
+}
+function check(idx){
+[...answers.children].forEach(b=>b.disabled=true);
+if(idx===qs[i].c){score+=10;alert("✅ پاسخ صحیح");}
+else{alert("❌ پاسخ نادرست");}
+score.innerText?0:0;
+document.getElementById("score").textContent="امتیاز: "+score;
+document.getElementById("next").style.display="block";
+}
+function nextQ(){i++;show();}
+show();
+</script>
+</body></html>
